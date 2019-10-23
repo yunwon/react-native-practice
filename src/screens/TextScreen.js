@@ -4,20 +4,9 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 const TextScreen = () => {
   const [state, setState] = useState({
     name: "",
-    password: "",
-    validationText: ""
+    password: ""
   });
-  const { name, password, validationText } = state;
-
-  const validation = newPassword => {
-    let password = newPassword.split("");
-    return password.length < 5
-      ? setState({
-          validationText: "More than 5 characters, you bitch!"
-        })
-      : setState({ validationText: "" });
-  };
-
+  const { name, password } = state;
   return (
     <View>
       <Text>Enter Name:</Text>
@@ -35,9 +24,11 @@ const TextScreen = () => {
         autoCapitalize="none"
         style={styles.input}
         value={password}
-        onChangeText={newPassword => validation(newPassword)}
+        onChangeText={newPassword => setState({ password: newPassword })}
       />
-      <Text>{validationText}</Text>
+      {password.length < 5 ? (
+        <Text>Password should be more than 4 characters</Text>
+      ) : null}
     </View>
   );
 };
